@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nápoles ·  Un Collage Mediterráneo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET & VARIABLES ─────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --napoli: #2cc8f3;       /* Vesuvio blue */
+      --madrid: #ffa600;       /* Castilian gold */
+      --night:  #0D0D0D;
+      --bone:   #F0EAD6;
+      --cream:  #FAF7F0;
+      --sea:    #2A5C7A;
+      --mist:   rgba(240,234,214,0.06);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'Cormorant Garamond', serif;
+      --font-ui: 'Montserrat', sans-serif;
+    }
+    
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--night);
+      color: var(--bone);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.8;
+      overflow-x: hidden;
+      cursor: default;
+    }
+
+    /* ── NOISE OVERLAY ─────────────────────────────────── */
+    body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 256px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+    /* ── PROGRESS BAR ──────────────────────────────────── */
+    #progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--napoli), var(--madrid));
+      z-index: 1000;
+      transition: width 0.1s linear;
+    }
+
+    /* ── NAV ───────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      justify-content: flex-start;
+gap: 3rem;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: linear-gradient(to bottom, rgba(13,13,13,0.9) 0%, transparent 100%);
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.15em;
+      color: var(--bone);
+      text-decoration: none;
+    }
+
+    .nav-logo span:first-child { color: var(--napoli); }
+    .nav-logo span:last-child  { color: var(--madrid); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(240,234,214,0.55);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--bone); }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('VESUVIO1.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  animation: heroBreath 8s ease-in-out infinite alternate;
+}
+
+/* Dark gradient overlay sopra la foto */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(13,13,13,0.80) 0%, rgba(13,13,13,0.60) 40%, rgba(13,13,13,0.88) 100%),
+    radial-gradient(ellipse 70% 60% at 20% 80%, rgba(217,79,61,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 30%, rgba(200,146,42,0.14) 0%, transparent 55%);
+}
+
+@keyframes heroBreath {
+  from { transform: scale(1.00); }
+  to   { transform: scale(1.04); }
+}
+
+    .hero-divider {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1px;
+      height: 55%;
+      background: linear-gradient(to bottom, transparent, rgba(240,234,214,0.18), transparent);
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(240,234,214,0.45);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1.2s ease 0.3s both;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(4.5rem, 12vw, 11rem);
+      line-height: 0.88;
+      letter-spacing: 0.04em;
+      animation: fadeUp 1.2s ease 0.5s both;
+    }
+
+    .hero-title .n { color: var(--napoli); }
+    .hero-title .m { color: var(--madrid); }
+    .hero-title .dot {
+      display: inline-block;
+      color: var(--bone);
+      opacity: 0.3;
+      font-size: 0.5em;
+      vertical-align: middle;
+      margin: 0 0.15em;
+    }
+
+    .hero-sub {
+      margin-top: 2.5rem;
+      font-style: italic;
+      font-size: 1.7rem;
+      color: rgba(240,234,214,0.55);
+      max-width: 520px;
+      animation: fadeUp 1.2s ease 0.7s both;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: fadeUp 1.2s ease 1s both;
+    }
+
+    .hero-scroll span {
+      font-family: var(--font-ui);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(240,234,214,0.3);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, rgba(240,234,214,0.3), transparent);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollDrop {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ──────────────────────────────────────── */
+    .section {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .section:nth-child(even) { direction: rtl; }
+    .section:nth-child(even) > * { direction: ltr; }
+
+    /* Alternating color accent per section */
+    .section:nth-child(odd)  { --accent: var(--napoli); }
+    .section:nth-child(even) { --accent: var(--madrid); }
+
+    .section-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .section-visual-inner {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* Each section gets a unique illustrated background */
+    .s1-visual { background: radial-gradient(ellipse 100% 100% at 50% 100%, rgba(217,79,61,0.35) 0%, rgba(13,13,13,0) 70%), linear-gradient(160deg, #1a0a08 0%, #0d0d0d 60%); }
+    .s2-visual { background: radial-gradient(ellipse 100% 100% at 50% 0%,   rgba(200,146,42,0.3)  0%, rgba(13,13,13,0) 70%), linear-gradient(200deg, #0d0d0d 0%, #140f00 60%); }
+    .s3-visual { background: radial-gradient(ellipse 90%  90%  at 30% 50%,  rgba(200,100,30,0.25) 0%, rgba(13,13,13,0) 65%), linear-gradient(120deg, #0d0d0d 0%, #0a1208 60%); }
+    .s4-visual { background: radial-gradient(ellipse 100% 80%  at 70% 40%,  rgba(217,79,61,0.28) 0%, rgba(13,13,13,0) 70%), linear-gradient(180deg, #120808 0%, #0d0d0d 60%); }
+    .s5-visual { background: radial-gradient(ellipse 100% 100% at 50% 60%,  rgba(42,92,122,0.4)  0%, rgba(13,13,13,0) 70%), linear-gradient(200deg, #0d0d0d 0%, #010d14 60%); }
+    .s6-visual { background: radial-gradient(ellipse 100% 100% at 50% 50%,  rgba(217,100,40,0.45) 0%, rgba(200,146,42,0.25) 50%, rgba(13,13,13,0) 80%); }
+    .s7-visual { background: radial-gradient(ellipse 80%  80%  at 50% 50%,  rgba(217,79,61,0.2) 0%, rgba(200,146,42,0.2) 50%, rgba(13,13,13,0) 75%); }
+
+    /* SVG illustrations inside each visual panel */
+    .visual-svg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.85;
+    }
+
+    .visual-svg svg {
+      width: 80%;
+      max-width: 380px;
+      height: auto;
+      filter: drop-shadow(0 0 40px rgba(0,0,0,0.5));
+    }
+
+    .visual-number {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 2rem;
+      font-family: var(--font-display);
+      font-size: 8rem;
+      line-height: 1;
+      color: rgba(240,234,214,0.04);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .section-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 5rem 6rem 6rem;
+      position: relative;
+    }
+
+    .section:nth-child(even) .section-content {
+      padding: 6rem 6rem 6rem 5rem;
+    }
+
+    .section-tag {
+      font-family: var(--font-ui);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-tag::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      line-height: 0.95;
+      letter-spacing: 0.03em;
+      color: var(--bone);
+      margin-bottom: 1.8rem;
+    }
+
+    .section-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .section-body {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: rgba(240,234,214,0.72);
+      max-width: 480px;
+    }
+
+    .section-body p { margin-bottom: 1.2em; }
+    .section-body p:last-child { margin-bottom: 0; }
+
+    /* Pull quote */
+    .pull-quote {
+      margin: 2.5rem 0;
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--accent);
+      font-style: italic;
+      font-size: 1.25rem;
+      color: rgba(240,234,214,0.88);
+      line-height: 1.6;
+    }
+
+    /* City tag chips */
+    .city-chips {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      font-family: var(--font-ui);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid;
+      border-radius: 2px;
+    }
+
+    .chip-napoli { border-color: var(--napoli); color: var(--napoli); }
+    .chip-madrid { border-color: var(--madrid); color: var(--madrid); }
+
+    /* ── DIVIDERS ───────────────────────────────────────── */
+    .hr-section {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(240,234,214,0.1), transparent);
+      margin: 0 3rem;
+    }
+
+    /* ── CONCLUSION ─────────────────────────────────────── */
+    #conclusione {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem;
+      overflow: hidden;
+    }
+
+    #conclusione .bg-glow {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 30% 50%, rgba(217,79,61,0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 70% 50%, rgba(200,146,42,0.2) 0%, transparent 60%),
+        var(--night);
+    }
+
+    #conclusione .content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+    }
+
+    #conclusione .eyebrow {
+      font-family: var(--font-ui);
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(240,234,214,0.4);
+      margin-bottom: 2rem;
+    }
+
+    #conclusione h2 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.04em;
+      margin-bottom: 2.5rem;
+    }
+
+    #conclusione h2 .n { color: var(--napoli); }
+    #conclusione h2 .m { color: var(--madrid); }
+
+    #conclusione p {
+      font-size: 1.15rem;
+      color: rgba(240,234,214,0.7);
+      line-height: 1.9;
+      margin-bottom: 1.2em;
+    }
+
+    .final-quote {
+      margin: 3rem auto;
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 1.6rem;
+      color: var(--bone);
+      line-height: 1.5;
+      position: relative;
+      padding: 0 2rem;
+    }
+
+    .final-quote::before, .final-quote::after {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      color: rgba(217,79,61,0.2);
+      position: absolute;
+      line-height: 1;
+    }
+
+    .final-quote::before { content: '"'; top: -1rem; left: -0.5rem; }
+    .final-quote::after  { content: '"'; bottom: -2.5rem; right: -0.5rem; }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 3rem;
+      font-family: var(--font-ui);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(240,234,214,0.2);
+      border-top: 1px solid rgba(240,234,214,0.06);
+    }
+
+    footer span { color: var(--napoli); }
+    footer span.m { color: var(--madrid); }
+
+    /* ── SCROLL-REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .delay-1 { transition-delay: 0.15s; }
+    .delay-2 { transition-delay: 0.30s; }
+    .delay-3 { transition-delay: 0.45s; }
+    .delay-4 { transition-delay: 0.60s; }
+
+    /* ── RESPONSIVE ─────────────────────────────────────── */
+/* ── CAROUSEL FOTO ──────────────────────────────────── */
+.carousel-track-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+}
+
+.carousel-track img {
+  height: 160px;
+  width: 220px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+  filter: brightness(0.85) saturate(0.9);
+  transition: filter 0.3s;
+}
+
+.carousel-track img:hover {
+  filter: brightness(1.05) saturate(1.15);
+}
+
+@keyframes scrollLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollRight {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.scroll-left  { animation: scrollLeft  20s linear infinite; }
+.scroll-right { animation: scrollRight 20s linear infinite; }
+
+.carousel-track-wrap:hover .scroll-left,
+.carousel-track-wrap:hover .scroll-right {
+  animation-play-state: paused;
+}
+/* ── SEZIONE 2 FULLSCREEN ───────────────────────────── */
+#s2.s2-fullscreen {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 6rem 3rem;
+}
+
+.s2-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 15% 50%, rgba(217,79,61,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 85% 50%, rgba(200,146,42,0.15) 0%, transparent 55%),
+    var(--night);
+}
+
+.s2-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 80px,
+    rgba(240,234,214,0.025) 80px,
+    rgba(240,234,214,0.025) 81px
+  );
+}
+
+.s2-number {
+  position: absolute;
+  bottom: 2rem;
+  right: 3rem;
+  font-family: var(--font-display);
+  font-size: 9rem;
+  line-height: 1;
+  color: rgba(240,234,214,0.04);
+  user-select: none;
+  pointer-events: none;
+}
+
+.s2-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  max-width: 1100px;
+  width: 100%;
+  align-items: center;
+}
+
+.s2-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.5vw, 5.5rem);
+  line-height: 0.92;
+  letter-spacing: 0.03em;
+  color: var(--bone);
+  margin-bottom: 2.5rem;
+}
+
+.s2-title em {
+  font-style: normal;
+  color: var(--madrid);
+}
+
+.s2-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.s2-divider span:not(.s2-divider-dot) {
+  flex: 1;
+  height: 1px;
+  background: rgba(240,234,214,0.15);
+}
+
+.s2-divider-dot {
+  color: var(--napoli);
+  font-size: 0.75rem;
+}
+
+.s2-cities {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.s2-city {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.s2-city-label {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+}
+
+.s2-city-drink {
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240,234,214,0.4);
+}
+
+.s2-city-sep {
+  font-size: 2rem;
+  color: rgba(240,234,214,0.15);
+  margin-top: -0.5rem;
+}
+
+.s2-body {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: rgba(240,234,214,0.75);
+}
+
+.s2-body p { margin-bottom: 1.2em; }
+
+/* ── MOKA cliccabile ── */
+.moka-trigger {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: var(--napoli);
+  cursor: pointer;
+  position: relative;
+  padding: 0 0.15em;
+  transition: color 0.2s, transform 0.2s;
+  vertical-align: baseline;
+}
+
+.moka-trigger::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0; right: 0;
+  height: 2px;
+  background: var(--napoli);
+  transform: scaleX(0.4);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.moka-trigger:hover {
+  color: #ff6b57;
+  transform: scale(1.08);
+}
+
+.moka-trigger:hover::after {
+  transform: scaleX(1);
+}
+
+.moka-trigger.playing {
+  animation: mokaPulse 0.8s ease-in-out infinite alternate;
+  color: #ff6b57;
+}
+
+@keyframes mokaPulse {
+  from { text-shadow: 0 0 8px rgba(217,79,61,0.6); }
+  to   { text-shadow: 0 0 22px rgba(217,79,61,1), 0 0 40px rgba(217,79,61,0.4); }
+}
+
+@media (max-width: 900px) {
+  .s2-inner { grid-template-columns: 1fr; gap: 3rem; }
+  #s2.s2-fullscreen { padding: 5rem 2rem; }
+}
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+
+      .section {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .section:nth-child(even) { direction: ltr; }
+
+      .section-visual {
+        height: 40vh;
+        min-height: 280px;
+      }
+
+      .section-content {
+        padding: 3rem 2rem !important;
+      }
+
+      .section-body { max-width: 100%; }
+    }
+    .s2-inner-custom {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 4rem;
+  width: 100%;
+  max-width: 1100px;
+  align-items: center;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Progress bar -->
+  <div id="progress"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <a class="nav-logo" href="#hero">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#s1">Origen</a></li>
+      <li><a href="#s2">Café</a></li>
+      <li><a href="#s3">Suerte</a></li>
+      <li><a href="#s4">Caos</a></li>
+      <li><a href="#s5">Mar</a></li>
+      <li><a href="#s6">Atardecer</a></li>
+      <li><a href="#conclusione">Síntesis</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─── HERO ─────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+
+
+    <h1 class="hero-title">
+      <span class="n">NÁPOLES</span>
+    </h1>
+    <p class="hero-sub">La vida orquestada entre el mito y la realidad</p>
+    <div class="hero-scroll">
+      
+    
+    </div>
+  </section>
+
+  <!-- ─── SECCIÓN 1: El Mito y el Origen ───────────────── -->
+  <div class="hr-section"></div>
+  <section class="section" id="s1">
+    <div class="section-visual s1-visual" style="overflow:hidden; padding:0; position:relative;">
+        <img 
+          src="img/partenope.png" 
+          alt="Partenope - Castel dell'Ovo Napoli"
+          style="
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            filter: brightness(0.75) saturate(0.85);
+          "
+        />
+        <!-- overlay scuro ai bordi -->
+        <div style="position:absolute; inset:0; background: linear-gradient(to right, transparent 70%, #0D0D0D 100%), linear-gradient(to bottom, #0D0D0D 0%, transparent 15%, transparent 85%, #0D0D0D 100%); pointer-events:none;"></div>
+        <div class="visual-number">01</div>
+      </div>
+
+    <div class="section-content">
+      <p class="section-tag reveal delay-1">Sección I</p>
+      <h2 class="section-title reveal delay-2">El Mito y <em>el Origen</em></h2>
+      <div class="section-body reveal delay-3">
+    
+        <div class="pull-quote">
+            Nápoles no es solo una ciudad; es un canto que sobrevivió al mar. 
+        </div>
+        <p>Todo comenzó con <strong style="color:var(--bone);">Parténope</strong>, la sirena que, al no poder encantar a Ulises, eligió nuestras rocas para su último descanso. De su cuerpo nació el suelo que pisamos, vigilado por el gigante de fuego: el Vesuvio, guardián y amenaza de nuestra historia. Caminar por estas calles es pisar un puente invisible construido con piedra volcánica, donde el mito se funde con la realidad en cada esquina.</p>
+        
+    </div>
+  </section>
+
+<!-- ─── SECCIÓN 2: El Café (FULLSCREEN) ─────────────── -->
+<div class="hr-section"></div>
+<section id="s2" class="s2-fullscreen">
+
+  <div class="s2-bg"></div>
+  <span class="s2-number">02</span>
+
+  <audio id="audio-moka" src="audio/audio_moka.mp3" preload="auto"></audio>
+
+  <div style="position:relative; z-index:2; display:grid; grid-template-columns:1fr 1fr; gap:4rem; max-width:1100px; width:100%; align-items:center;">
+
+    <!-- SINISTRA: testo -->
+    <div>
+    <p class="section-tag" style="margin-bottom:1.2rem; color:#6F4E37; --accent:#6F4E37;">Sección II</p>
+      <h2 class="s2-title">El Ritual <span style="color:var(--bone);">del</span> <span style="color:#6F4E37;">Café</span></h2>
+      <div class="s2-divider">
+        <span></span><span class="s2-divider-dot">✦</span><span></span>
+      </div>
+      <div class="s2-body">
+        <p>El día en Nápoles no comienza con el sol, sino con un aroma que no conoce fronteras y que lo inunda todo. Aquí, el café es mucho más que una bebida; es un rito sagrado, una pequeña pausa de esperanza que nace del silbido de una <span class="moka-trigger" id="moka-btn" style="color:#6F4E37;">MOKA</span> en la cocina. Es el primer encuentro del día, un vapor que sube desde el Tirreno para recordarnos que estamos vivos. En cada taza se esconde la necesidad de compartir, de detener el tiempo antes de lanzarse al bullicio de la ciudad.</p>
+      </div>
+      
+    </div>
+
+    <!-- DESTRA: video -->
+    <div style="width:100%; height:65vh; border-radius:8px; overflow:hidden;">
+      <video autoplay muted loop playsinline
+        style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;">
+        <source src="video/WhatsApp_Video_napoli_2.mp4" type="video/mp4">
+      </video>
+    </div>
+
+  </div>
+
+</section>
+
+  <!-- ─── SECCIÓN 3: La Suerte y el Destino ────────────── -->
+  <div class="hr-section"></div>
+  <section class="section" id="s3">
+    <div class="section-visual s3-visual" style="overflow:hidden; padding:0; position:relative;">
+  
+        <!-- FOTO 1: street art napoli - metà sinistra -->
+        <div style="position:absolute; inset:0; width:50%; left:0; overflow:hidden;">
+          <img
+            src="img/napoli_.jpg"
+            alt="Street art Napoli corno"
+            style="width:100%; height:100%; object-fit:cover; object-position:center 70%; display:block; filter:brightness(0.75) saturate(0.9);"
+          />
+        </div>
+      
+        <!-- FOTO 2: corno rosso - metà destra -->
+        <div style="position:absolute; inset:0; left:50%; width:50%; overflow:hidden;">
+          <img
+            src="img/CORNO.png"
+            alt="Il Corno Rosso"
+            style="width:100%; height:100%; object-fit:cover; object-position:center center; display:block; filter:brightness(0.75) saturate(0.9);"
+          />
+        </div>
+      
+        <!-- linea divisoria centrale -->
+        <div style="position:absolute; left:50%; top:0; bottom:0; width:2px; background:linear-gradient(to bottom, transparent, rgba(240,234,214,0.25), transparent); z-index:2;"></div>
+      
+        <!-- overlay scuro bordi e fusione -->
+        <div style="position:absolute; inset:0; background: linear-gradient(to right, #0D0D0D 0%, transparent 15%, transparent 85%, #0D0D0D 100%), linear-gradient(to bottom, #0D0D0D 0%, transparent 12%, transparent 88%, #0D0D0D 100%); pointer-events:none; z-index:3;"></div>
+      
+        <div class="visual-number" style="z-index:4;">03</div>
+      </div>
+
+    <div class="section-content">
+    <p class="section-tag reveal delay-1" style="color:#C0392B; --accent:#C0392B;">Sección III</p>
+    <h2 class="section-title reveal delay-2">La Suerte y <em style="color:#C0392B;">el Destino</em></h2>
+      <div class="section-body reveal delay-3">
+        <p> Caminar por los barrios españoles es desafiar al destino con un <em style="font-style:italic; color:#C0392B;">corno</em> siempre escondido en el bolsillo. Es nuestra superstición roja, un amuleto que nos protege del mal de ojo y de las incertidumbres del mañana. En Nápoles, la suerte no se espera, se persigue entre amuletos y gestos antiguos. He aprendido que vivir aquí es tener la valentía de confiar en el azar, aceptando que la magia y la realidad son dos caras de la misma moneda napolitana. 
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ─── SECCIÓN 4: El Caos Armónico ──────────────────── -->
+  <div class="hr-section"></div>
+  <section class="section" id="s4">
+    <div class="section-visual s4-visual" style="overflow:hidden; padding:0; position:relative; cursor:pointer;" id="s4-video-container">
+
+  <video id="s4-video" loop playsinline autoplay muted
+    style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; display:block;">
+    <source src="video/videonapopenshot2.mp4" type="video/mp4">
+  </video>
+
+  <!-- overlay scuro -->
+  <div style="position:absolute; inset:0; background: linear-gradient(to left, transparent 70%, #0D0D0D 100%), linear-gradient(to bottom, #0D0D0D 0%, transparent 15%, transparent 85%, #0D0D0D 100%); pointer-events:none; z-index:2;"></div>
+
+  <!-- icona play -->
+  <div id="s4-play-icon" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; z-index:3;">
+    <div style="width:64px; height:64px; border-radius:50%; border:2px solid rgba(240,234,214,0.6); display:flex; align-items:center; justify-content:center; background:rgba(13,13,13,0.5); transition:transform 0.3s;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="rgba(240,234,214,0.9)">
+        <polygon points="6,3 20,12 6,21"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="visual-number" style="z-index:4;">04</div>
+</div>
+
+    <div class="section-content">
+      <p class="section-tag reveal delay-1">Sección IV</p>
+      <h2 class="section-title reveal delay-2">El Caos <em>Armónico</em></h2>
+      <div class="section-body reveal delay-3">
+        <p>Nápoles no se visita, se sobrevive; es una experiencia que te atraviesa los sentidos. Su caos es una danza perfectamente orquestada de motos esquivando lo imposible, voces que se gritan de balcón a balcón y mercados que nunca parecen dormir. Es un desorden que no asusta, sino que alimenta el alma con una vitalidad compartida. Es esa energía frenética la que te hace sentir realmente vivo, ya sea esquivando un coche en una calle estrecha o dejándote llevar por la corriente humana de Spaccanapoli.</p>
+
+    </div>
+  </section>
+
+  <!-- ─── SECCIÓN 5: El Aliento del Mar ────────────────── -->
+<div class="hr-section"></div>
+<section class="section" id="s5">
+
+    <!-- SINISTRA: testo -->
+    <div class="section-content">
+      <p class="section-tag reveal delay-1">Sección V</p>
+      <h2 class="section-title reveal delay-2">El Aliento <em>del Mar</em></h2>
+      <div class="section-body reveal delay-3">
+        <p>Frente al mar de Mergellina existe un silencio particular, un respiro profundo que solo el Tirreno sabe dar al alma. Es el verdadero pulmón de la ciudad, el lugar donde el horizonte se abre para recordarte che siempre hay un camino de vuelta, sin importar cuán lejos te lleven tus pasos. Ese azul infinito es una nostalgia líquida que nos define; buscamos el reflejo del agua en cada rincón, intentando encontrar ese alivio que solo el golfo puede ofrecer a quienes nacieron bajo su brisa.</p>
+      </div>
+      <div class="city-chips reveal delay-4">
+        <span class="chip chip-napoli">Mergellina · Mar Tirreno</span>
+      </div>
+    </div>
+  
+    <!-- DESTRA: carousel -->
+    <div class="section-visual s5-visual" style="overflow:hidden; padding:0; display:flex; flex-direction:column; justify-content:center; gap:12px; position:relative;">
+      <div class="carousel-track-wrap">
+        <div class="carousel-track scroll-left">
+          <img src="img/mare1.jpg" alt="Napoli mare" />
+          <img src="img/mare2.jpg" alt="Mergellina" />
+          <img src="img/mare3.jpg" alt="Vesuvio dal mare" />
+          <img src="img/mare1.jpg" alt="Napoli mare" />
+          <img src="img/mare2.jpg" alt="Mergellina" />
+          <img src="img/mare3.jpg" alt="Vesuvio dal mare" />
+        </div>
+      </div>
+      <div class="carousel-track-wrap">
+        <div class="carousel-track scroll-right">
+          <img src="img/mare1.jpg" alt="Napoli mare" />
+          <img src="img/mare2.jpg" alt="Mergellina" />
+          <img src="img/mare3.jpg" alt="Vesuvio dal mare" />
+          <img src="img/mare1.jpg" alt="Napoli mare" />
+          <img src="img/mare2.jpg" alt="Mergellina" />
+          <img src="img/mare3.jpg" alt="Vesuvio dal mare" />
+        </div>
+      </div>
+      <div style="position:absolute; inset:0; background: linear-gradient(to right, #0D0D0D 0%, transparent 12%, transparent 88%, #0D0D0D 100%); pointer-events:none; z-index:2;"></div>
+      <div class="visual-number">05</div>
+    </div>
+  
+  </section>
+
+  <!-- ─── SECCIÓN 6: El Oro del Atardecer ──────────────── -->
+  <div class="hr-section"></div>
+  <section class="section" id="s6">
+    <div class="section-visual s6-visual" style="overflow:hidden; padding:0; position:relative;">
+
+        <img
+          src="img/tramonti.JPG"
+          alt="Tramonti Napoli"
+          style="width:100%; height:100%; object-fit:cover; object-position:center center; display:block; filter:brightness(0.85) saturate(1.1);"
+        />
+      
+        <!-- overlay bordi -->
+        <div style="position:absolute; inset:0; background: linear-gradient(to left, transparent 70%, #0D0D0D 100%), linear-gradient(to bottom, #0D0D0D 0%, transparent 8%, transparent 92%, #0D0D0D 100%); pointer-events:none; z-index:2;"></div>
+      
+        <div class="visual-number" style="z-index:3;">06</div>
+      </div>
+
+
+    <div class="section-content">
+    <p class="section-tag reveal delay-1" style="color:#E8700A; --accent:#E8700A;">Sección VI</p>
+    <h2 class="section-title reveal delay-2">El Oro del <em style="color:#E8700A;">Atardecer</em></h2>
+      <div class="section-body reveal delay-3">
+        <p>Si hay algo que define a esta tierra sin necesidad de palabras, es la luz de sus atardeceres. Cuando el sol comienza a descender, baña todo el Golfo de Nápoles con un oro intenso antes de que llegue la noche. Es un momento mágico donde el cielo parece incendiarse, tiñendo las fachadas de un naranja fuego que parece sacado de un lienzo barroco. En ese instante, la belleza es tan abrumadora que cualquier distancia desaparece, recordándome que bajo este <span style="color:#E8700A;">sol</span> sol siempre estaré en casa. </p>
+       
+    
+    </div>
+  </section>
+
+  <!-- ─── CONCLUSIONE ───────────────────────────────────── -->
+  <div class="hr-section"></div>
+  <section id="conclusione">
+    <!-- FOTO SFONDO -->
+    <img
+      src="img/PROUDTOBENAPOLI.jpg"
+      alt="Proud to be Napoli"
+      style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:20% center; display:block; filter:brightness(0.35) saturate(0.8);"
+    />
+
+    <div class="content">
+      <p class="eyebrow reveal">Sección VII · Síntesis Personal</p>
+      <h2 class="reveal delay-1">
+        <span class="n">NÁPOLES</span><br>
+        <span style="color:rgba(240,234,214,0.15); font-size:0.5em;">✦</span><br>
+      </h2>
+
+      <div class="final-quote reveal delay-2">
+        Mi historia es un collage de estas vivencias, un relato que lleva grabada la fuerza de mis raíces. 
+      </div>
+
+      <p class="reveal delay-2" style="margin-top:3rem;">Nápoles me ha dado la base sobre la cual construir mis sueños y la forma de mirar el mundo con ojos mediterráneos.</p>
+      <p class="reveal delay-4" style="font-style:italic; font-size:1.2rem; color:rgba(240,234,214,0.85); margin-top:2rem;">
+        
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────── -->
+  <footer>
+    <p><span>Nápoles</span> &nbsp;·&nbsp; <span class="m"> Un Collage Mediterráneo</p>
+  </footer>
+
+  <!-- ─── SCRIPTS ───────────────────────────────────────── -->
+  
+  <script>
+    /* ── MOKA audio ── */
+const mokaBtn   = document.getElementById('moka-btn');
+const mokaAudio = document.getElementById('audio-moka');
+
+if (mokaBtn && mokaAudio) {
+  mokaBtn.addEventListener('click', () => {
+    if (mokaAudio.paused) {
+      mokaAudio.currentTime = 0;
+      mokaAudio.play();
+      mokaBtn.classList.add('playing');
+    } else {
+      mokaAudio.pause();
+      mokaBtn.classList.remove('playing');
+    }
+  });
+
+  mokaAudio.addEventListener('ended', () => {
+    mokaBtn.classList.remove('playing');
+  });
+}
+/* ── VESUVIO modale ── */
+const vesuvioBtn   = document.getElementById('vesuvio-btn');
+const vesuvioModal = document.getElementById('vesuvio-modal');
+const vesuvioClose = document.getElementById('vesuvio-close');
+
+if (vesuvioBtn && vesuvioModal) {
+  vesuvioBtn.addEventListener('click', () => {
+    vesuvioModal.classList.add('active');
+  });
+  vesuvioClose.addEventListener('click', () => {
+    vesuvioModal.classList.remove('active');
+  });
+  vesuvioModal.addEventListener('click', (e) => {
+    if (e.target === vesuvioModal) vesuvioModal.classList.remove('active');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') vesuvioModal.classList.remove('active');
+  });
+}
+ /* ── SEZIONE 4 VIDEO con audio on click ── */
+const s4Container = document.getElementById('s4-video-container');
+const s4Video     = document.getElementById('s4-video');
+const s4PlayIcon  = document.getElementById('s4-play-icon');
+
+if (s4Container && s4Video) {
+
+  /* prova autoplay muted */
+  s4Video.muted = true;
+  s4Video.play().catch(function() {
+    /* se fallisce mostra l'icona play */
+    s4PlayIcon.style.display = 'flex';
+  });
+
+  s4Container.addEventListener('click', function() {
+    if (s4Video.paused) {
+      /* primo click: avvia il video */
+      s4Video.muted = true;
+      s4Video.play();
+      s4PlayIcon.style.display = 'none';
+    } else if (s4Video.muted) {
+      /* secondo click: attiva audio */
+      s4Video.muted = false;
+      s4PlayIcon.style.display = 'none';
+    } else {
+      /* terzo click: disattiva audio */
+      s4Video.muted = true;
+    }
+  });
+}
+    /* ── Progress bar ── */
+    const progress = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      progress.style.width = (scrollTop / docHeight * 100) + '%';
+    });
+
+    /* ── Scroll-reveal ── */
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer  = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    /* ── Parallax hero ── */
+    const heroBg = document.querySelector('.hero-bg');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (heroBg) heroBg.style.transform = `translateY(${y * 0.35}px)`;
+    }, { passive: true });
+  </script> 
+</body>
+</html>
